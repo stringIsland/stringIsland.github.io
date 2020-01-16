@@ -167,6 +167,147 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-常用数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/16/%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">常用数据结构</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/16/%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2020-01-16T06:48:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="常用的数据结构包括："><a href="#常用的数据结构包括：" class="headerlink" title="常用的数据结构包括："></a>常用的数据结构包括：</h3><ul>
+<li>数组、字符串</li>
+<li>链表</li>
+<li>栈</li>
+<li>队列</li>
+<li>双端队列</li>
+<li>树</li>
+</ul>
+<h2 id="数组、字符串"><a href="#数组、字符串" class="headerlink" title="数组、字符串"></a>数组、字符串</h2><h3 id="字符串转化"><a href="#字符串转化" class="headerlink" title="字符串转化"></a>字符串转化</h3><p>数组和字符串是最基本的数据结构，在很多编程语言中都有着十分相似的性质，而围绕着它们的算法面试题也是最多的。</p>
+<p>很多时候，在分析字符串相关面试题的过程中，我们往往要针对字符串当中的每一个字符进行分析和处理，甚至有时候我们得先把给定的字符串转换成字符数组之后再进行分析和处理。</p>
+<h4 id="举例：翻转字符串“algorithm”。"><a href="#举例：翻转字符串“algorithm”。" class="headerlink" title="举例：翻转字符串“algorithm”。"></a>举例：翻转字符串“algorithm”。</h4><p><img src="http://www.lgstatic.com/i/image2/M01/90/CA/CgoB5l2IRiCATj5LAGJa69BtQRA357.gif" alt="" title="字符串翻转"><br>解法：用两个指针，一个指向字符串的第一个字符 a，一个指向它的最后一个字符 m，然后互相交换。交换之后，两个指针向中央一步步地靠拢并相互交换字符，直到两个指针相遇。这是一种比较快速和直观的方法。</p>
+<p>注意：由于无法直接修改字符串里的字符，所以必须先把字符串变换为数组，然后再运用这个算法。</p>
+<h4 id="数组的优缺点"><a href="#数组的优缺点" class="headerlink" title="数组的优缺点"></a>数组的优缺点</h4><p>要掌握一种数据结构，就必须要懂得分析它的优点和缺点。数组的优点在于：</p>
+<ul>
+<li>构建非常简单</li>
+<li>能在 O(1) 的时间里根据数组的下标（index）查询某个元素<br>而数组的缺点在于：</li>
+<li>构建时必须分配一段连续的空间</li>
+<li>查询某个元素是否存在时需要遍历整个数组，耗费 O(n) 的时间（其中，n 是元素的个数）</li>
+<li>删除和添加某个元素时，同样需要耗费 O(n) 的时间<br>所以，当你在考虑是否应当采用数组去辅助你的算法时，请务必考虑它的优缺点，看看它的缺点是否会阻碍你的算法复杂度以及空间复杂度。<h4 id="例题分析"><a href="#例题分析" class="headerlink" title="例题分析"></a>例题分析</h4>LeetCode 第 242 题：给定两个字符串 s 和 t，编写一个函数来判断 t 是否是 s 的字母异位词。<br>说明：你可以假设字符串只包含小写字母。</li>
+</ul>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1"></a>示例 1</h4><p>输入: s = “anagram”, t = “nagaram”<br>输出: true</p>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2"></a>示例 2</h4><p>输入: s = “rat”, t = “car”<br>输出: false</p>
+<p>字母异位词，也就是两个字符串中的相同字符的数量要对应相等。例如，s 等于 “anagram”，t 等于 “nagaram”，s 和 t 就互为字母异位词。因为它们都包含有三个字符 a，一个字符 g，一个字符 m，一个字符 n，以及一个字符 r。而当 s 为 “rat”，t 为 “car”的时候，s 和 t 不互为字母异位词。</p>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p>一个重要的前提“假设两个字符串只包含小写字母”，小写字母一共也就 26 个，因此：</p>
+<ol>
+<li>可以利用两个长度都为 26 的字符数组来统计每个字符串中小写字母出现的次数，然后再对比是否相等；</li>
+<li>可以只利用一个长度为 26 的字符数组，将出现在字符串 s 里的字符个数加 1，而出现在字符串 t 里的字符个数减 1，最后判断每个小写字母的个数是否都为 0。</li>
+</ol>
+<p>按上述操作，可得出结论：s 和 t 互为字母异位词。</p>
+<h4 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean isAnagram(String s, String t) &#123;</span><br><span class="line">    if (s.length() !&#x3D; t.length()) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    int[] table &#x3D; new int[26];</span><br><span class="line">    for (int i &#x3D; 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">        table[s.charAt(i) - &#39;a&#39;]++;</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; t.length(); i++) &#123;</span><br><span class="line">        table[t.charAt(i) - &#39;a&#39;]--;</span><br><span class="line">        if (table[t.charAt(i) - &#39;a&#39;] &lt; 0) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="链表（LinkedList）"><a href="#链表（LinkedList）" class="headerlink" title="链表（LinkedList）"></a>链表（LinkedList）</h2><p>单链表：链表中的每个元素实际上是一个单独的对象，而所有对象都通过每个元素中的引用字段链接在一起。<br>双链表：与单链表不同的是，双链表的每个结点中都含有两个引用字段。</p>
+<h4 id="链表的优缺点"><a href="#链表的优缺点" class="headerlink" title="链表的优缺点"></a>链表的优缺点</h4><p>链表的优点如下：</p>
+<ul>
+<li>链表能灵活地分配内存空间；</li>
+<li>能在 O(1) 时间内删除或者添加元素，前提是该元素的前一个元素已知，当然也取决于是单链表还是双链表，在双链表中，如果已知该元素的后一个元素，同样可以在 O(1) 时间内删除或者添加该元素。<br>链表的缺点是：</li>
+<li>不像数组能通过下标迅速读取元素，每次都要从链表头开始一个一个读取；</li>
+<li>查询第 k 个元素需要 O(k) 时间。</li>
+</ul>
+<p><strong>应用场景：</strong> 如果要解决的问题里面需要很多快速查询，链表可能并不适合；如果遇到的问题中，数据的元素个数不确定，而且需要经常进行数据的添加和删除，那么链表会比较合适。而如果数据元素大小确定，删除插入的操作并不多，那么数组可能更适合。</p>
+<p><strong>经典解法</strong><br>链表是实现很多复杂数据结构的基础，经典解法如下。</p>
+<ol>
+<li><strong>利用快慢指针（有时候需要用到三个指针</strong><br>典型题目例如：链表的翻转，寻找倒数第 k 个元素，寻找链表中间位置的元素，判断链表是否有环等等。</li>
+<li><strong>构建一个虚假的链表头</strong><br>一般用在要返回新的链表的题目中，比如，给定两个排好序的链表，要求将它们整合在一起并排好序。又比如，将一个链表中的奇数和偶数按照原定的顺序分开后重新组合成一个新的链表，链表的头一半是奇数，后一半是偶数。<br>在这类问题里，如果不用一个虚假的链表头，那么在创建新链表的第一个元素时，我们都得要判断一下链表的头指针是否为空，也就是要多写一条 if else 语句。比较简洁的写法是创建一个空的链表头，直接往其后面添加元素即可，最后返回这个空的链表头的下一个节点即可。</li>
+</ol>
+<p><strong>建议：</strong>在解决链表的题目时，可以在纸上或者白板上画出节点之间的相互关系，然后画出修改的方法，既可以帮助你分析问题，又可以在面试的时候，帮助面试官清楚地看到你的思路。</p>
+<p><strong>例题分析</strong><br>LeetCode 第 25 题：给你一个链表，每 k 个节点一组进行翻转，请你返回翻转后的链表。k 是一个正整数，它的值小于或等于链表的长度。如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。</p>
+<p>说明：</p>
+<ul>
+<li>你的算法只能使用常数的额外空间。</li>
+<li>你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。</li>
+</ul>
+<p>示例：<br>给定这个链表：1-&gt;2-&gt;3-&gt;4-&gt;5<br>当 k=2 时，应当返回：2-&gt;1-&gt;4-&gt;3-&gt;5<br>当 k=3 时，应当返回：3-&gt;2-&gt;1-&gt;4-&gt;5</p>
+<p><strong>解题思路</strong></p>
+<p>这道题考察了两个知识点：</p>
+<ul>
+<li>对链表翻转算法是否熟悉</li>
+<li>对递归算法的理解是否清晰</li>
+</ul>
+<p>在翻转链表的时候，可以借助三个指针：prev、curr、next，分别代表前一个节点、当前节点和下一个节点，实现过程如下所示。<br><img src="http://www.lgstatic.com/i/image2/M01/90/E9/CgotOV2IRJ2AYlnUACToKJcAldQ867.gif" alt="" title="k个一组翻转链表"></p>
+<ol>
+<li>将 curr 指向的下一节点保存到 next 指针；</li>
+<li>curr 指向 prev，一起前进一步；</li>
+<li>重复之前步骤，直到 k 个元素翻转完毕；</li>
+<li>当完成了局部的翻转后，prev 就是最终的新的链表头，curr 指向了下一个要被处理的局部，而原来的头指针 head 成为了链表的尾巴。</li>
+</ol>
+<p><strong>leecode题解思路</strong></p>
+<ul>
+<li>链表分区为已翻转部分+待翻转部分+未翻转部分</li>
+<li>每次翻转前，要确定翻转链表的范围，这个必须通过 k 此循环来确定</li>
+<li>需记录翻转链表前驱和后继，方便翻转完成后把已翻转部分和未翻转部分连接起来</li>
+<li>初始需要两个变量 pre 和 end，pre 代表待翻转链表的前驱，end 代表待翻转链表的末尾</li>
+<li>经过k此循环，end 到达末尾，记录待翻转链表的后继 next = end.next</li>
+<li>翻转链表，然后将三部分链表连接起来，然后重置 pre 和 end 指针，然后进入下一次循环</li>
+<li>特殊情况，当翻转部分长度不足 k 时，在定位 end 完成后，end==null，已经到达末尾，说明题目已完成，直接返回即可</li>
+<li>时间复杂度为 O(n*K)O(n∗K) 最好的情况为 O(n)O(n) 最差的情况未 O(n^2)O(n<br>2<br>)</li>
+<li>空间复杂度为 O(1)O(1) 除了几个必须的节点指针外，我们并没有占用其他空间<br><img src="https://pic.leetcode-cn.com/866b404c6b0b52fa02385e301ee907fc015742c3766c80c02e24ef3a8613e5ad-k%E4%B8%AA%E4%B8%80%E7%BB%84%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.png" alt=""></li>
+</ul>
+<p><strong>代码演示</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public ListNode reverseKGroup(ListNode head, int k) &#123;</span><br><span class="line">    ListNode dummy &#x3D; new ListNode(0);</span><br><span class="line">    dummy.next &#x3D; head;</span><br><span class="line"></span><br><span class="line">    ListNode pre &#x3D; dummy;</span><br><span class="line">    ListNode end &#x3D; dummy;</span><br><span class="line"></span><br><span class="line">    while (end.next !&#x3D; null) &#123;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; k &amp;&amp; end !&#x3D; null; i++) end &#x3D; end.next;</span><br><span class="line">        if (end &#x3D;&#x3D; null) break;</span><br><span class="line">        ListNode start &#x3D; pre.next;</span><br><span class="line">        ListNode next &#x3D; end.next;</span><br><span class="line">        end.next &#x3D; null;</span><br><span class="line">        pre.next &#x3D; reverse(start);</span><br><span class="line">        start.next &#x3D; next;</span><br><span class="line">        pre &#x3D; start;</span><br><span class="line"></span><br><span class="line">        end &#x3D; pre;</span><br><span class="line">    &#125;</span><br><span class="line">    return dummy.next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private ListNode reverse(ListNode head) &#123;</span><br><span class="line">    ListNode pre &#x3D; null;</span><br><span class="line">    ListNode curr &#x3D; head;</span><br><span class="line">    while (curr !&#x3D; null) &#123;</span><br><span class="line">        ListNode next &#x3D; curr.next;</span><br><span class="line">        curr.next &#x3D; pre;</span><br><span class="line">        pre &#x3D; curr;</span><br><span class="line">        curr &#x3D; next;</span><br><span class="line">    &#125;</span><br><span class="line">    return pre;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">作者：reals</span><br><span class="line">链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;reverse-nodes-in-k-group&#x2F;solution&#x2F;tu-jie-kge-yi-zu-fan-zhuan-lian-biao-by-user7208t&#x2F;</span><br><span class="line">来源：力扣（LeetCode）</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/16/%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
