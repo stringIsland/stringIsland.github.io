@@ -23,12 +23,12 @@
         border-left-color: #6d6d6d;    /*左边框颜色*/
     }
   </style>
-  <meta name="description" content="常用的数据结构包括： 数组、字符串 链表 栈 队列 双端队列 树  数组、字符串字符串转化数组和字符串是最基本的数据结构，在很多编程语言中都有着十分相似的性质，而围绕着它们的算法面试题也是最多的。 很多时候，在分析字符串相关面试题的过程中，我们往往要针对字符串当中的每一个字符进行分析和处理，甚至有时候我们得先把给定的字符串转换成字符数组之后再进行分析和处理。">
+  <meta name="description" content="常用的数据结构包括：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常用数据结构">
 <meta property="og:url" content="http://yoursite.com/2020/01/16/%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="Leon的博客">
-<meta property="og:description" content="常用的数据结构包括： 数组、字符串 链表 栈 队列 双端队列 树  数组、字符串字符串转化数组和字符串是最基本的数据结构，在很多编程语言中都有着十分相似的性质，而围绕着它们的算法面试题也是最多的。 很多时候，在分析字符串相关面试题的过程中，我们往往要针对字符串当中的每一个字符进行分析和处理，甚至有时候我们得先把给定的字符串转换成字符数组之后再进行分析和处理。">
+<meta property="og:description" content="常用的数据结构包括：">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/CA/CgoB5l2IRiCATj5LAGJa69BtQRA357.gif">
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/E9/CgotOV2IRJ2AYlnUACToKJcAldQ867.gif">
@@ -37,9 +37,10 @@
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/C9/CgoB5l2IRMSAYv0mAJhTnwV5DmQ777.gif">
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/E9/CgotOV2IRR6AHz-iADMO9EtKhbI610.gif">
 <meta property="article:published_time" content="2020-01-16T06:48:18.000Z">
-<meta property="article:modified_time" content="2020-01-18T15:05:21.084Z">
+<meta property="article:modified_time" content="2020-01-18T15:23:35.867Z">
 <meta property="article:author" content="Leon">
 <meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://www.lgstatic.com/i/image2/M01/90/CA/CgoB5l2IRiCATj5LAGJa69BtQRA357.gif">
   
@@ -70,7 +71,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="/assert/me.jpg" class="js-avatar">
+			<img src="/assert/me.png" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">Leon</a></h1>
@@ -128,7 +129,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/assert/me.jpg" class="js-avatar">
+				<img src="/assert/me.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Leon</h1>
@@ -220,7 +221,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="常用的数据结构包括："><a href="#常用的数据结构包括：" class="headerlink" title="常用的数据结构包括："></a>常用的数据结构包括：</h3><ul>
+        <h3 id="常用的数据结构包括："><a href="#常用的数据结构包括：" class="headerlink" title="常用的数据结构包括："></a>常用的数据结构包括：</h3><a id="more"></a>
+<ul>
 <li>数组、字符串</li>
 <li>链表</li>
 <li>栈</li>
@@ -230,7 +232,6 @@
 </ul>
 <h2 id="数组、字符串"><a href="#数组、字符串" class="headerlink" title="数组、字符串"></a>数组、字符串</h2><h3 id="字符串转化"><a href="#字符串转化" class="headerlink" title="字符串转化"></a>字符串转化</h3><p>数组和字符串是最基本的数据结构，在很多编程语言中都有着十分相似的性质，而围绕着它们的算法面试题也是最多的。</p>
 <p>很多时候，在分析字符串相关面试题的过程中，我们往往要针对字符串当中的每一个字符进行分析和处理，甚至有时候我们得先把给定的字符串转换成字符数组之后再进行分析和处理。</p>
-<a id="more"></a>
 <h4 id="举例：翻转字符串“algorithm”。"><a href="#举例：翻转字符串“algorithm”。" class="headerlink" title="举例：翻转字符串“algorithm”。"></a>举例：翻转字符串“algorithm”。</h4><p><img src="http://www.lgstatic.com/i/image2/M01/90/CA/CgoB5l2IRiCATj5LAGJa69BtQRA357.gif" alt="" title="字符串翻转"><br>解法：用两个指针，一个指向字符串的第一个字符 a，一个指向它的最后一个字符 m，然后互相交换。交换之后，两个指针向中央一步步地靠拢并相互交换字符，直到两个指针相遇。这是一种比较快速和直观的方法。</p>
 <p>注意：由于无法直接修改字符串里的字符，所以必须先把字符串变换为数组，然后再运用这个算法。</p>
 <h4 id="数组的优缺点"><a href="#数组的优缺点" class="headerlink" title="数组的优缺点"></a>数组的优缺点</h4><p>要掌握一种数据结构，就必须要懂得分析它的优点和缺点。数组的优点在于：</p>
@@ -430,6 +431,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
         		</li>
       		
 		</ul>
@@ -641,7 +646,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
             
             <div class="clearfix"></div>
