@@ -36,8 +36,11 @@
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/C9/CgoB5l2IRLSATKk3AMg-Ag7s3RA865.gif">
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/C9/CgoB5l2IRMSAYv0mAJhTnwV5DmQ777.gif">
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/E9/CgotOV2IRR6AHz-iADMO9EtKhbI610.gif">
+<meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/E9/CgotOV2IRUqAYTBNAHdENl7o0CI095.gif">
+<meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/E9/CgotOV2IRWCAF4adALLk-4fku-E775.gif">
+<meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/CA/CgoB5l2IRW6AKLrvAL5-qvzxLkw345.gif">
 <meta property="article:published_time" content="2020-01-16T06:48:18.000Z">
-<meta property="article:modified_time" content="2020-01-18T15:23:35.867Z">
+<meta property="article:modified_time" content="2020-01-20T03:38:48.902Z">
 <meta property="article:author" content="Leon">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
@@ -201,7 +204,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">5.7k字</span>
+        <span class="post-count">7k字</span>
       </span>
     </span>
 
@@ -210,7 +213,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">23分</span>
+        <span class="post-count">27分</span>
       </span>
     </span>
 </div>
@@ -396,6 +399,40 @@
 </ol>
 <p>窗口最大值只需读取双端队列头部元素。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  ArrayDeque&lt;Integer&gt; deq &#x3D; new ArrayDeque&lt;Integer&gt;();</span><br><span class="line">  int [] nums;</span><br><span class="line"></span><br><span class="line">  public void clean_deque(int i, int k) &#123;</span><br><span class="line">    &#x2F;&#x2F; remove indexes of elements not from sliding window</span><br><span class="line">    if (!deq.isEmpty() &amp;&amp; deq.getFirst() &#x3D;&#x3D; i - k)</span><br><span class="line">      deq.removeFirst();</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; remove from deq indexes of all elements </span><br><span class="line">    &#x2F;&#x2F; which are smaller than current element nums[i]</span><br><span class="line">    while (!deq.isEmpty() &amp;&amp; nums[i] &gt; nums[deq.getLast()])      deq.removeLast();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public int[] maxSlidingWindow(int[] nums, int k) &#123;</span><br><span class="line">    int n &#x3D; nums.length;</span><br><span class="line">    if (n * k &#x3D;&#x3D; 0) return new int[0];</span><br><span class="line">    if (k &#x3D;&#x3D; 1) return nums;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; init deque and output</span><br><span class="line">    this.nums &#x3D; nums;</span><br><span class="line">    int max_idx &#x3D; 0;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; k; i++) &#123;</span><br><span class="line">      clean_deque(i, k);</span><br><span class="line">      deq.addLast(i);</span><br><span class="line">      &#x2F;&#x2F; compute max in nums[:k]</span><br><span class="line">      if (nums[i] &gt; nums[max_idx]) max_idx &#x3D; i;</span><br><span class="line">    &#125;</span><br><span class="line">    int [] output &#x3D; new int[n - k + 1];</span><br><span class="line">    output[0] &#x3D; nums[max_idx];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; build output</span><br><span class="line">    for (int i  &#x3D; k; i &lt; n; i++) &#123;</span><br><span class="line">      clean_deque(i, k);</span><br><span class="line">      deq.addLast(i);</span><br><span class="line">      output[i - k + 1] &#x3D; nums[deq.getFirst()];</span><br><span class="line">    &#125;</span><br><span class="line">    return output;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：LeetCode</span><br><span class="line">链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;sliding-window-maximum&#x2F;solution&#x2F;hua-dong-chuang-kou-zui-da-zhi-by-leetcode-3&#x2F;</span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="树（Tree）"><a href="#树（Tree）" class="headerlink" title="树（Tree）"></a>树（Tree）</h2><p>树的结构十分直观，而树的很多概念定义都有一个相同的特点：递归，也就是说，一棵树要满足某种性质，往往要求每个节点都必须满足。例如，在定义一棵二叉搜索树时，每个节点也都必须是一棵二叉搜索树。</p>
+<p>正因为树有这样的性质，大部分关于树的面试题都与递归有关，换句话说，面试官希望通过一道关于树的问题来考察你对于递归算法掌握的熟练程度。</p>
+<p><strong>树的形状</strong><br>在面试中常考的树的形状有：普通二叉树、平衡二叉树、完全二叉树、二叉搜索树、四叉树（Quadtree）、多叉树（N-ary Tree）。</p>
+<p>对于一些特殊的树，例如红黑树（Red-Black Tree）、自平衡二叉搜索树（AVL Tree），一般在面试中不会被问到，除非你所涉及的研究领域跟它们相关或者你十分感兴趣，否则不需要特别着重准备。</p>
+<p>关于树的考题，无非就是要考查树的遍历以及序列化（serialization)。</p>
+<p><strong>树的遍历</strong><br><strong>1. 前序遍历（Preorder Traversal）</strong></p>
+<p>方法：先访问根节点，然后访问左子树，最后访问右子树。在访问左、右子树的时候，同样，先访问子树的根节点，再访问子树根节点的左子树和右子树，这是一个不断递归的过程。<br><img src="http://www.lgstatic.com/i/image2/M01/90/E9/CgotOV2IRUqAYTBNAHdENl7o0CI095.gif" alt=""><br>遍历结果：1 2 3 4 5 6 7 8 9 10<br>应用场景：运用最多的场合包括在树里进行搜索以及创建一棵新的树。</p>
+<p><strong>2. 中序遍历（Inorder Traversal）</strong></p>
+<p>方法：先访问左子树，然后访问根节点，最后访问右子树，在访问左、右子树的时候，同样，先访问子树的左边，再访问子树的根节点，最后再访问子树的右边。</p>
+<p><img src="http://www.lgstatic.com/i/image2/M01/90/E9/CgotOV2IRWCAF4adALLk-4fku-E775.gif" alt="">        </p>
+<p>应用场景：最常见的是二叉搜素树，由于二叉搜索树的性质就是左孩子小于根节点，根节点小于右孩子，对二叉搜索树进行中序遍历的时候，被访问到的节点大小是按顺序进行的。</p>
+<p><strong>3. 后序遍历（Postorder Traversal）</strong></p>
+<p>方法：先访问左子树，然后访问右子树，最后访问根节点。<br><img src="http://www.lgstatic.com/i/image2/M01/90/CA/CgoB5l2IRW6AKLrvAL5-qvzxLkw345.gif" alt=""><br>应用场景：在对某个节点进行分析的时候，需要来自左子树和右子树的信息。收集信息的操作是从树的底部不断地往上进行，好比你在修剪一棵树的叶子，修剪的方法是从外面不断地往根部将叶子一片片地修剪掉。</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li><p>掌握好这三种遍历的递归写法和非递归写法是非常重要的，懂得分析各种写法的时间复杂度和空间复杂度同样重要。</p>
+</li>
+<li><p>无论是前端工程师，还是后端工程师，在准备面试的时候，树这个数据结构都是最应该花时间学习的，既能证明你对递归有很好的认识，又能帮助你学习图论（关于图论，我们将在下一节课一起讨论）。树的许多性质都是面试的热门考点，尤其是二叉搜索树（BST）。</p>
+</li>
+</ul>
+<p><strong>建议</strong>：练习一道经典的 LeetCode 第 250 题，在一棵二叉树里，统计有多少棵子树，要求子树里面的元素拥有相同的数字。</p>
+<p><strong>例题分析</strong><br>LeetCode 第 230 题：给定一个二叉搜索树，编写一个函数 kthSmallest 来查找其中第 k 个最小的元素。</p>
+<p>说明：你可以假设 k 总是有效的，1 ≤ k ≤ 二叉搜索树元素个数。</p>
+<p><strong>解题思路</strong><br>这道题考察了两个知识点：</p>
+<ul>
+<li>二叉搜索树的性质</li>
+<li>二叉搜索树的遍历</li>
+</ul>
+<p>二叉搜索树的性质：对于每个节点来说，该节点的值比左孩子大，比右孩子小，而且一般来说，二叉搜索树里不出现重复的值。</p>
+<p>二叉搜索树的中序遍历是高频考察点，节点被遍历到的顺序是按照节点数值大小的顺序排列好的。即，中序遍历当中遇到的元素都是按照从小到大的顺序出现。</p>
+<p>因此，我们只需要对这棵树进行中序遍历的操作，当访问到第 k 个元素的时候返回结果就好。</p>
+<p><strong>注意：</strong>这道题可以变成求解第 K 大的元素，方法就是对这个二叉搜索树进行反向的中序遍历，那么数据的被访问顺序就是由大到小了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Definition for a binary tree node.</span><br><span class="line"> * public class TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode left;</span><br><span class="line"> *     TreeNode right;</span><br><span class="line"> *     TreeNode(int x) &#123; val &#x3D; x; &#125;</span><br><span class="line"> * &#125;</span><br><span class="line"> *&#x2F;</span><br><span class="line">class Solution &#123;</span><br><span class="line">    public List inorder(TreeNode root,List&lt;Integer&gt; list)&#123;</span><br><span class="line">        if(root &#x3D;&#x3D; null) return list;</span><br><span class="line">        inorder(root.left,list);</span><br><span class="line">        list.add(root.val);</span><br><span class="line">        inorder(root.right,list);</span><br><span class="line">        return list;</span><br><span class="line">    &#125;</span><br><span class="line">    public int kthSmallest(TreeNode root, int k) &#123;</span><br><span class="line">        List&lt;Integer&gt; list&#x3D;new ArrayList&lt;Integer&gt;();</span><br><span class="line">        list &#x3D; inorder(root,list);</span><br><span class="line">        return list.get(k-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -534,7 +571,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用的数据结构包括："><span class="toc-number">1.</span> <span class="toc-text">常用的数据结构包括：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组、字符串"><span class="toc-number"></span> <span class="toc-text">数组、字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串转化"><span class="toc-number">1.</span> <span class="toc-text">字符串转化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#举例：翻转字符串“algorithm”。"><span class="toc-number">1.1.</span> <span class="toc-text">举例：翻转字符串“algorithm”。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组的优缺点"><span class="toc-number">1.2.</span> <span class="toc-text">数组的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例题分析"><span class="toc-number">1.3.</span> <span class="toc-text">例题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-1"><span class="toc-number">1.4.</span> <span class="toc-text">示例 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-2"><span class="toc-number">1.5.</span> <span class="toc-text">示例 2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解题思路"><span class="toc-number">1.6.</span> <span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码演示"><span class="toc-number">1.7.</span> <span class="toc-text">代码演示</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链表（LinkedList）"><span class="toc-number"></span> <span class="toc-text">链表（LinkedList）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#链表的优缺点"><span class="toc-number">0.1.</span> <span class="toc-text">链表的优缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈（Stack）"><span class="toc-number"></span> <span class="toc-text">栈（Stack）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#队列（Queue）"><span class="toc-number"></span> <span class="toc-text">队列（Queue）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双端队列（Deque）"><span class="toc-number"></span> <span class="toc-text">双端队列（Deque）</span></a>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用的数据结构包括："><span class="toc-number">1.</span> <span class="toc-text">常用的数据结构包括：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组、字符串"><span class="toc-number"></span> <span class="toc-text">数组、字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串转化"><span class="toc-number">1.</span> <span class="toc-text">字符串转化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#举例：翻转字符串“algorithm”。"><span class="toc-number">1.1.</span> <span class="toc-text">举例：翻转字符串“algorithm”。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组的优缺点"><span class="toc-number">1.2.</span> <span class="toc-text">数组的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#例题分析"><span class="toc-number">1.3.</span> <span class="toc-text">例题分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-1"><span class="toc-number">1.4.</span> <span class="toc-text">示例 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-2"><span class="toc-number">1.5.</span> <span class="toc-text">示例 2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解题思路"><span class="toc-number">1.6.</span> <span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码演示"><span class="toc-number">1.7.</span> <span class="toc-text">代码演示</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链表（LinkedList）"><span class="toc-number"></span> <span class="toc-text">链表（LinkedList）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#链表的优缺点"><span class="toc-number">0.1.</span> <span class="toc-text">链表的优缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈（Stack）"><span class="toc-number"></span> <span class="toc-text">栈（Stack）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#队列（Queue）"><span class="toc-number"></span> <span class="toc-text">队列（Queue）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双端队列（Deque）"><span class="toc-number"></span> <span class="toc-text">双端队列（Deque）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树（Tree）"><span class="toc-number"></span> <span class="toc-text">树（Tree）</span></a>
                     </div>
                 </span>
             </div>
@@ -646,15 +683,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
             
             <div class="clearfix"></div>
