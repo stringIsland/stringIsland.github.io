@@ -34,10 +34,12 @@
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/CC/CgoB5l2ISa-Af-7tAB97MaSBBWo211.gif">
 <meta property="og:image" content="http://www.lgstatic.com/i/image2/M01/90/B0/CgoB5l2ILXuAYVN6AAAwD4S9aDs940.png">
 <meta property="article:published_time" content="2020-02-01T14:04:13.000Z">
-<meta property="article:modified_time" content="2020-02-06T13:23:36.664Z">
+<meta property="article:modified_time" content="2020-02-06T14:58:59.103Z">
 <meta property="article:author" content="Leon">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="算法">
+<meta property="article:tag" content="PriorityQueue">
+<meta property="article:tag" content="HashMap">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://www.lgstatic.com/i/image2/M01/90/EC/CgotOV2ISXaAJ9iGACXUNreouXo038.gif">
   
@@ -198,7 +200,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.8k字</span>
+        <span class="post-count">2.1k字</span>
       </span>
     </span>
 
@@ -207,7 +209,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">7分</span>
+        <span class="post-count">8分</span>
       </span>
     </span>
 </div>
@@ -296,7 +298,9 @@
 
        /    \
 
-car(2)   book(1)        </code></pre>
+car(2)   book(1)        </code></pre><p><strong>代码演示</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">  public List&lt;Integer&gt; topKFrequent(int[] nums, int k) &#123;</span><br><span class="line">    &#x2F;&#x2F; build hash map : character and how often it appears</span><br><span class="line">    HashMap&lt;Integer, Integer&gt; count &#x3D; new HashMap();</span><br><span class="line">    for (int n: nums) &#123;</span><br><span class="line">      count.put(n, count.getOrDefault(n, 0) + 1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; init heap &#39;the less frequent element first&#39;</span><br><span class="line">	&#x2F;&#x2F;通过lambda表达式自定义Comparator，建堆add()时传入的参数是key，而比较的是value。</span><br><span class="line">	&#x2F;&#x2F;将key加入heap时，按照对应entry的value的升序来排列key</span><br><span class="line">    PriorityQueue&lt;Integer&gt; heap &#x3D;</span><br><span class="line">            new PriorityQueue&lt;Integer&gt;((n1, n2) -&gt; count.get(n1) - count.get(n2));</span><br><span class="line">	&#x2F;&#x2F;PriorityQueue&lt;Integer&gt; pq &#x3D; new PriorityQueue&lt;&gt;(new Comparator&lt;Integer&gt;() &#123;</span><br><span class="line">    &#x2F;&#x2F;        @Override</span><br><span class="line">    &#x2F;&#x2F;      public int compare(Integer a, Integer b) &#123;</span><br><span class="line">    &#x2F;&#x2F;        return map.get(a) - map.get(b);</span><br><span class="line">    &#x2F;&#x2F;  &#125;</span><br><span class="line">    &#x2F;&#x2F;&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; keep k top frequent elements in the heap</span><br><span class="line">    for (int n: count.keySet()) &#123;</span><br><span class="line">      heap.add(n);</span><br><span class="line">      if (heap.size() &gt; k)</span><br><span class="line">        heap.poll();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; build output list</span><br><span class="line">    List&lt;Integer&gt; top_k &#x3D; new LinkedList();</span><br><span class="line">    while (!heap.isEmpty())</span><br><span class="line">      top_k.add(heap.poll());</span><br><span class="line">    Collections.reverse(top_k);</span><br><span class="line">    return top_k;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：LeetCode</span><br><span class="line">链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;top-k-frequent-elements&#x2F;solution&#x2F;qian-k-ge-gao-pin-yuan-su-by-leetcode&#x2F;</span><br><span class="line">来源：力扣（LeetCode）</span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -335,6 +339,14 @@ car(2)   book(1)        </code></pre>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PriorityQueue</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">HashMap</a>
         		</li>
       		
 		</ul>
@@ -555,6 +567,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">PriorityQueue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">HashMap</a>
               </li>
             
             <div class="clearfix"></div>
