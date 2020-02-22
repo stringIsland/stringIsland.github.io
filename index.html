@@ -212,73 +212,9 @@
       
         <p><strong>应用场景</strong><br>前缀树被广泛地运用在字典查找当中，也被称为字典树。</p>
 <p><strong>举例：</strong> 给定一系列字符串，这些字符串构成了一种字典，要求你在这个字典当中找出所有以“ABC”开头的字符串。</p>
-<p><strong>解法 1：</strong> 暴力搜索</p>
-<p>直接遍历一遍字典，然后逐个判断每个字符串是否由“ABC”开头。假设字典很大，有 N 个单词，要对比的不是“ABC”，而是任意的，那不妨假设所要对比的开头平均长度为 M，那么时间复杂度是 O(M×N)。</p>
-<p><strong>解法 2：</strong> 前缀树</p>
-<p>如果用前缀树头帮助对字典的存储进行优化，那么可以把搜索的时间复杂度下降为 O(M)，其中 M 表示字典里最长的那个单词的字符个数，在很多情况下，字典里的单词个数 N 是远远大于 M 的。因此，前缀树在这种场合中是非常高效的。</p>
-<p><strong>经典应用</strong></p>
-<ol>
-<li><p>网站上的搜索框会罗列出以搜索文字作为开头的相关搜索信息，这里运用了前缀树进行后端的快速检索。</p>
-</li>
-<li><p>汉字拼音输入法的联想输出功能也运用了前缀树。</p>
-</li>
-</ol>
-<p><strong>举例：</strong> 假如有一个字典，字典里面有如下词：”A”，”to”，”tea”，”ted”，”ten”，”i”，”in”，”inn”，每个单词还能有自己的一些权重值，那么用前缀树来构建这个字典将会是如下的样子：</p>
-<p><img src="http://www.lgstatic.com/i/image2/M01/90/D0/CgotOV2ILXyAAbuPAAHuMjoQ0_M307.png" alt=""></p>
-<p>性质</p>
-<ol>
-<li><p>每个节点至少包含两个基本属性。</p>
-<ul>
-<li><p>children：数组或者集合，罗列出每个分支当中包含的所有字符</p>
-</li>
-<li><p>isEnd：布尔值，表示该节点是否为某字符串的结尾</p>
-</li>
-</ul>
-</li>
-</ol>
-<ol start="2">
-<li><p>前缀树的根节点是空的</p>
-<p> 所谓空，即只利用到这个节点的 children 属性，即只关心在这个字典里，有哪些打头的字符。</p>
-</li>
-</ol>
-<ol start="3">
-<li>除了根节点，其他所有节点都有可能是单词的结尾，叶子节点一定都是单词的结尾。</li>
-</ol>
-<p><strong>实现</strong><br>前缀树最基本的操作就是两个：创建和搜索。</p>
-<p><strong>1. 创建</strong></p>
-<ul>
-<li><p>遍历一遍输入的字符串，对每个字符串的字符进行遍历</p>
-</li>
-<li><p>从前缀树的根节点开始，将每个字符加入到节点的 children 字符集当中。</p>
-</li>
-<li><p>如果字符集已经包含了这个字符，则跳过。</p>
-</li>
-<li><p>如果当前字符是字符串的最后一个，则把当前节点的 isEnd 标记为真。</p>
-</li>
-</ul>
-<p>由上，创建的方法很直观。</p>
-<p>前缀树真正强大的地方在于，每个节点还能用来保存额外的信息，比如可以用来记录拥有相同前缀的所有字符串。因此，当用户输入某个前缀时，就能在 O(1) 的时间内给出对应的推荐字符串。</p>
-<p><strong>2. 搜索</strong></p>
-<p>与创建方法类似，从前缀树的根节点出发，逐个匹配输入的前缀字符，如果遇到了就继续往下一层搜索，如果没遇到，就立即返回。</p>
-<p><strong>例题分析</strong></p>
-<p>LeetCode 第 212 题：给定一个二维网格 board 和一个字典中的单词列表 words，找出所有同时在二维网格和字典中出现的单词。<br>            <img src="http://www.lgstatic.com/i/image2/M01/90/B0/CgoB5l2ILXyAYLwPAAAO6ajgsHk324.png" alt=""></p>
-<p><strong>解题思路</strong></p>
-<p>这是一道出现较为频繁的难题，题目给出了一个二维的字符矩阵，然后还给出了一个字典，现在要求在这个字符矩阵中找到出现在字典里的单词。</p>
-<p>由于字符矩阵的每个点都能作为一个字符串的开头，所以必须得尝试从矩阵中的所有字符出发，上下左右一步步地走，然后去和字典进行匹配，如果发现那些经过的字符能组成字典里的单词，就把它记录下来。</p>
-<p>可以借用深度优先的算法来实现（关于深度优先算法，将在第 06 节课深入探讨），如果你对它不熟悉，可以把它想象成走迷宫。</p>
-<p><strong>字典匹配的解法 1</strong>：每次都循环遍历字典，看看是否存在字典里面，如果把输入的字典变为哈希集合的话，似乎只需要 O(1) 的时间就能完成匹配。</p>
-<p>但是，这样并不能进行前缀的对比，即，必须每次都要进行一次全面的深度优先搜索，或者搜索的长度为字典里最长的字符串长度，这样还是不够高效。</p>
-<p><strong>字典匹配的解法 2：</strong> 对比字符串的前缀，借助前缀树来重新构建字典。</p>
-<p>假如在矩阵里遇到了一个字符”V”，而字典里根本就没有以“V”开头的字符串，则不需要将深度优先搜索进行下去，可以大大地提高搜索效率。</p>
-<p>构建好了前缀树之后，每次从矩阵里的某个字符出发进行搜索的时候，同步地对前缀树进行对比，如果发现字符一直能被找到，就继续进行下去，一步一步地匹配，直到在前缀树里发现一个完整的字符串，把它输出即可。</p>
-<p><strong>leetcode题解</strong><br>从图中的每个位置出发 -&gt; 看遍历过程中是否遇到了 words 中的某个单词</p>
-<p>遍历过程中判断是否遇到了某个单词，我们可以事先把所有单词存到前缀树中。这样的话，如果当前走的路径不是前缀树的前缀，我们就可以提前结束了。如果是前缀树的中的单词，我们就将其存到结果中。</p>
-<p>至于实现的话，我们可以在遍历过程中，将当前路径的单词传进函数，然后判断当前路径构成的单词是否是在前缀树中出现即可。</p>
-<p>这个想法可行，但不够好，因为每次都从前缀树中判断当前路径的单词，会带来重复的判断。比如先判断了 an 存在于前缀树中，接下来假如路径变成 ang ，判断它在不在前缀中，又需要判断一遍 an 。</p>
-<p>因此，我们可以将前缀树融合到我们的算法中，递归中去传递前缀树的节点，判断当前节点的孩子是否为 null，如果是 null 说明当前前缀不存在，可以提前结束。如果不是 null，再判断当前节点是否是单词的结尾，如果是结尾直接将当前单词加入。</p>
-<p>由于递归过程中没有加路径，所以我们改造一下前缀树的节点，将单词直接存入节点，这样的话就可以直接取到了。</p>
-<p>干巴巴的文字可能不好理解，看一下下边的代码应该就明白了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;改造前缀树节点</span><br><span class="line">class TrieNode &#123;</span><br><span class="line">    public TrieNode[] children;</span><br><span class="line">    public String word; &#x2F;&#x2F;节点直接存当前的单词</span><br><span class="line"></span><br><span class="line">    public TrieNode() &#123;</span><br><span class="line">        children &#x3D; new TrieNode[26];</span><br><span class="line">        word &#x3D; null;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; 26; i++) &#123;</span><br><span class="line">            children[i] &#x3D; null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Trie &#123;</span><br><span class="line">    TrieNode root;</span><br><span class="line">    &#x2F;** Initialize your data structure here. *&#x2F;</span><br><span class="line">    public Trie() &#123;</span><br><span class="line">        root &#x3D; new TrieNode();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;** Inserts a word into the trie. *&#x2F;</span><br><span class="line">    public void insert(String word) &#123;</span><br><span class="line">        char[] array &#x3D; word.toCharArray();</span><br><span class="line">        TrieNode cur &#x3D; root;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; array.length; i++) &#123;</span><br><span class="line">            &#x2F;&#x2F; 当前孩子是否存在</span><br><span class="line">            if (cur.children[array[i] - &#39;a&#39;] &#x3D;&#x3D; null) &#123;</span><br><span class="line">                cur.children[array[i] - &#39;a&#39;] &#x3D; new TrieNode();</span><br><span class="line">            &#125;</span><br><span class="line">            cur &#x3D; cur.children[array[i] - &#39;a&#39;];</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; 当前节点结束，存入当前单词</span><br><span class="line">        cur.word &#x3D; word;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">    public List&lt;String&gt; findWords(char[][] board, String[] words) &#123;</span><br><span class="line">        Trie trie &#x3D; new Trie();</span><br><span class="line">        &#x2F;&#x2F;将所有单词存入前缀树中</span><br><span class="line">        List&lt;String&gt; res &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        for (String word : words) &#123;</span><br><span class="line">            trie.insert(word);</span><br><span class="line">        &#125;</span><br><span class="line">        int rows &#x3D; board.length;</span><br><span class="line">        if (rows &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            return res;</span><br><span class="line">        &#125;</span><br><span class="line">        int cols &#x3D; board[0].length;</span><br><span class="line">        &#x2F;&#x2F;从每个位置开始遍历</span><br><span class="line">        for (int i &#x3D; 0; i &lt; rows; i++) &#123;</span><br><span class="line">            for (int j &#x3D; 0; j &lt; cols; j++) &#123;</span><br><span class="line">                existRecursive(board, i, j, trie.root, res);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void existRecursive(char[][] board, int row, int col, TrieNode node, List&lt;String&gt; res) &#123;</span><br><span class="line">        if (row &lt; 0 || row &gt;&#x3D; board.length || col &lt; 0 || col &gt;&#x3D; board[0].length) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        char cur &#x3D; board[row][col];&#x2F;&#x2F;将要遍历的字母</span><br><span class="line">        &#x2F;&#x2F;当前节点遍历过或者将要遍历的字母在前缀树中不存在</span><br><span class="line">        if (cur &#x3D;&#x3D; &#39;$&#39; || node.children[cur - &#39;a&#39;] &#x3D;&#x3D; null) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        node &#x3D; node.children[cur - &#39;a&#39;];</span><br><span class="line">        &#x2F;&#x2F;判断当前节点是否是一个单词的结束</span><br><span class="line">        if (node.word !&#x3D; null) &#123;</span><br><span class="line">            &#x2F;&#x2F;加入到结果中</span><br><span class="line">            res.add(node.word);</span><br><span class="line">            &#x2F;&#x2F;将当前单词置为 null，防止重复加入</span><br><span class="line">            node.word &#x3D; null;</span><br><span class="line">        &#125;</span><br><span class="line">        char temp &#x3D; board[row][col];</span><br><span class="line">        &#x2F;&#x2F;上下左右去遍历</span><br><span class="line">        board[row][col] &#x3D; &#39;$&#39;;</span><br><span class="line">        existRecursive(board, row - 1, col, node, res);</span><br><span class="line">        existRecursive(board, row + 1, col, node, res);</span><br><span class="line">        existRecursive(board, row, col - 1, node, res);</span><br><span class="line">        existRecursive(board, row, col + 1, node, res);</span><br><span class="line">        board[row][col] &#x3D; temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：windliang</span><br><span class="line">链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;word-search-ii&#x2F;solution&#x2F;xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-44&#x2F;</span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/02/21/%E5%89%8D%E7%BC%80%E6%A0%91/#more">more >></a>
+        
       
 
       
@@ -384,29 +320,9 @@
 <li><p>深度优先</p>
 </li>
 <li><p>广度优先 </p>
-</li>
-</ul>
-<p>二部图，图的所有顶点可以分成两个子集 U 和 V，子集里的顶点互不直接相连，图里面所有的边，一头连着子集 U 里的顶点，一头连着子集 V 里的顶点。</p>
-<p><img src="http://www.lgstatic.com/i/image2/M01/90/EC/CgotOV2ISc-ADjNDAK_6wbp-nzI430.gif" alt=""></p>
-<ol>
-<li><p>给图里的顶点涂上颜色，子集 U 里的顶点都涂上红色，子集 V 里的顶点都涂上蓝色。</p>
-</li>
-<li><p>开始遍历这个图的所有顶点，想象一下手里握有红色和蓝色的画笔，每次交替地给遍历当中遇到的顶点涂上颜色。</p>
-</li>
-<li><p>如果这个顶点还没有颜色，那就给它涂上颜色，然后换成另外一支画笔。</p>
-</li>
-<li><p>下一个顶点，如果发现这个顶点已经涂上了颜色，而且颜色跟我手里画笔的颜色不同，那么表示这个顶点它既能在子集 U 里，也能在子集 V 里。</p>
-</li>
-<li><p>所以，它不是一个二部图。</p>
-</li>
-</ol>
-<p><strong>例题分析</strong><br>LeetCode 第 785 题：给定一个无向图 graph，当这个图为二部图时返回 true。</p>
-<p>提示：如果能将一个图的节点集合分割成两个独立的子集 A 和 B，并使图中的每一条边的两个节点一个来自 A 集合，一个来自 B 集合，就将这个图称为二部图。</p>
-<p><strong>我的解法：递归法</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    int[] color &#x3D; new int[1000];</span><br><span class="line"></span><br><span class="line">    public boolean isBipartite(int[][] graph) &#123;</span><br><span class="line">        Arrays.fill(color,2);</span><br><span class="line">        for(int i &#x3D; 0; i &lt; graph.length; i++)&#123;</span><br><span class="line">            if(color[i] &#x3D;&#x3D; 2)</span><br><span class="line">                DFS(graph,i,2);</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i &#x3D;0; i &lt; graph.length; i++)&#123;</span><br><span class="line">            if(color[i] &#x3D;&#x3D; 3)</span><br><span class="line">                return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    public void DFS(int[][] graph1, int i, int lastColor)&#123;</span><br><span class="line">        color[i] &#x3D; lastColor &#x3D;&#x3D; 0 ? 1 : 0;</span><br><span class="line">        for(int j &#x3D; 0; j &lt; graph1[i].length; j++)&#123;</span><br><span class="line">            int v &#x3D; graph1[i][j];</span><br><span class="line">            if(color[v] &#x3D;&#x3D; 2)&#123;</span><br><span class="line">                DFS(graph1, v, color[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            else if(color[v] &#x3D;&#x3D; color[i])&#123;</span><br><span class="line">                color[v] &#x3D; 3;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>leetcode官方题解：非递归</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean isBipartite(int[][] graph) &#123;</span><br><span class="line">        int n &#x3D; graph.length;</span><br><span class="line">        int[] color &#x3D; new int[n];</span><br><span class="line">        Arrays.fill(color, -1);</span><br><span class="line"></span><br><span class="line">        for (int start &#x3D; 0; start &lt; n; ++start) &#123;</span><br><span class="line">            if (color[start] &#x3D;&#x3D; -1) &#123;</span><br><span class="line">                Stack&lt;Integer&gt; stack &#x3D; new Stack();</span><br><span class="line">                stack.push(start);</span><br><span class="line">                color[start] &#x3D; 0;</span><br><span class="line"></span><br><span class="line">                while (!stack.empty()) &#123;</span><br><span class="line">                    Integer node &#x3D; stack.pop();</span><br><span class="line">                    for (int nei: graph[node]) &#123;</span><br><span class="line">                        if (color[nei] &#x3D;&#x3D; -1) &#123;</span><br><span class="line">                            stack.push(nei);</span><br><span class="line">                            color[nei] &#x3D; color[node] ^ 1;</span><br><span class="line">                        &#125; else if (color[nei] &#x3D;&#x3D; color[node]) &#123;</span><br><span class="line">                            return false;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：LeetCode</span><br><span class="line">链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;is-graph-bipartite&#x2F;solution&#x2F;pan-duan-er-fen-tu-by-leetcode&#x2F;</span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/02/19/%E4%BA%8C%E5%88%86%E5%9B%BE/#more">more >></a>
+        
       
 
       
